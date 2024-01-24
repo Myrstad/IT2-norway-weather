@@ -21,7 +21,7 @@ def get_place_info(place_name):
 @app.route("/search/", methods=["POST", "GET"])
 def search_get():
     if request.method == "GET":
-        return f"<form action='/search' method='POST'><label for='search_field'>Search:</label><input type='text' id='search_field' name='search_content' required><input type='submit' value='Search'></form>"
+        return render_template("search.html")
     else:
         search_content = request.form['search_content']
         return redirect(url_for(endpoint='search_result', query=search_content))
