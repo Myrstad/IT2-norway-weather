@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Weather results{% endblock %} 
+
+{% block content%}
+    <p>Showing results for "{{ query }}"</p>
+
+    <ul>
+        {% for hour in result %}
+            <li>
+                <a href="">
+                {{ hour.data.instant.details.air_temperature }}
+                </a>
+            </li>
+        {% endfor %} 
+    </ul>
+{% endblock %}
