@@ -11,7 +11,9 @@ def hello_world():
 def display_weather(query:str):
     lat, lon = map(float, query.split(","))
     response = requests.get(f'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={lat}&lon={lon}', headers={'user-agent': 'my-app/0.0.1'})
-    return response.json()
+    hours = response.json()["properties"]["timeseries"]
+    temps = [x["data"]["instant"]["details"]["air_temperature"] for x in hours]
+    return temps
 
 @app.route("/place/<string:place_name>")
 def get_place_info(place_name):
