@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Search{% endblock %} 
+
+{% block content%}
+    {% include 'search_form.html' %}
+    <h1>Search results</h1>
+    <p>Showing results for "{{ query }}"</p>
+
+    <ul>
+        {% for place in result.navn %}
+            <li>
+                <a href="">
+                {{ place.skrivemåte }} i
+                {{ place.kommuner[0].kommunenavn}}, 
+                {{ place.fylker[0].fylkesnavn}} 
+                ({{ place.navneobjekttype}})
+                </a>
+            </li>
+        {% endfor %} 
+    </ul>
+{% endblock %}
