@@ -1,6 +1,11 @@
 from flask import Flask, request, redirect, url_for, render_template
 import requests
 import json
+from datetime import datetime
+import locale
+
+
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -12,6 +17,18 @@ def display_weather(query:str):
     lat, lon = map(float, query.split(","))
     response = requests.get(f'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={lat}&lon={lon}', headers={'user-agent': 'my-app/0.0.1'})
     hours = response.json()["properties"]["timeseries"]
+    locale.setlocale(locale.LC_TIME, 'no_NB')
+    for hour in hours:
+
+
+        # dt_obj = datetime.fromisoformat(hour["time"].replace("Z", "+00:00"))
+
+        # weekday = dt_obj.strftime("%A")
+        # time = dt_obj.hour
+        # hour["time"] = f"{weekday}, {time}"
+        time_and_date = datetime.strptime(hour["time"], "%Y-%m-%dT%H:%M:%SZ")
+        hour["time"] = f"{time_and_date.weekday()} klokka {time_and_date.strftime('%H:%M')}"
+        
     #temps = [x["data"]["instant"]["details"]["air_temperature"] for x in hours]
 
     return render_template('weather_results.html', result=hours)
