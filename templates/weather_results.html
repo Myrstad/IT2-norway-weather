@@ -3,6 +3,7 @@
 {% block title %}Weather results{% endblock %} 
 
 {% block content%}
+    <h1>Showing wather for {{ ", ".join(place.split("_")) }}</h1>
     <table>
         {% for hour in result %}
             <tr>
