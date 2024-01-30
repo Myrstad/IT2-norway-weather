@@ -5,11 +5,19 @@
 {% block content%}
     <h1>Showing weather for {{ place.split("_")[0] }}</h1>
     <p>{{ ", ".join(place.split("_")[1:]) }}</p>
+    <div class="current_weather">
+        {{ current.data.instant.details.air_temperature }}°
+        {% set svg_filename = current.data.next_1_hours.summary.symbol_code + ".svg" %}
+        <br>
+        <img width="64" height="64" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="Your SVG">
+
+    </div>
+ 
     <table>
         {% for hour in result %}
             <tr>
                 <td>
-                    {{ hour.data.instant.details.air_temperature }} grader
+                    {{ hour.data.instant.details.air_temperature }}°
                 </td>
                 <td>
                     {{ hour.time }}

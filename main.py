@@ -16,7 +16,8 @@ def hello_world():
 def display_weather(query:str):
     lat, lon, place = query.split(',')[0], query.split(',')[1], query.split(',')[-1]
     response = requests.get(f'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={lat}&lon={lon}', headers={'user-agent': 'my-app/0.0.1'})
-    hours = response.json()["properties"]["timeseries"]
+    hours = response.json()["properties"]["timeseries"][1:]
+  
     locale.setlocale(locale.LC_TIME, 'nb_NO')
     for hour in hours:
 
@@ -28,10 +29,12 @@ def display_weather(query:str):
         # hour["time"] = f"{weekday}, {time}"
         time_and_date = datetime.strptime(hour["time"], "%Y-%m-%dT%H:%M:%SZ")
         hour["time"] = f"{time_and_date.strftime('%A %d.%m')} klokka {time_and_date.strftime('%H:%M')}"
-        
+        hour["data"]["instant"]["details"]["air_temperature"] = round(float(hour["data"]["instant"]["details"]["air_temperature"]))
+    current_hour = hours[0]
+    hours = hours[1:]   
     #temps = [x["data"]["instant"]["details"]["air_temperature"] for x in hours]
 
-    return render_template('weather_results.html', result=hours, place=place)
+    return render_template('weather_results.html', result=hours, place=place, current=current_hour)
     #sreturn response.json()
 
 @app.route("/place/<string:place_name>")
