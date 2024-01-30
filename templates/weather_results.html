@@ -3,14 +3,17 @@
 {% block title %}Weather results{% endblock %} 
 
 {% block content%}
-    <ul>
+    <table>
         {% for hour in result %}
-            <li>
-                <p>
-                {{ hour.data.instant.details.air_temperature }} grader
-                {{ hour.time }}
-                </p>
-            </li>
+            <tr>
+                <td>
+                    {{ hour.data.instant.details.air_temperature }} grader
+                </td>
+                <td>
+                    {{ hour.time }}
+                </td>
+            
+            </tr>
         {% endfor %} 
-    </ul>
+    </table>
 {% endblock %}
