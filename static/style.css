@@ -18,3 +18,13 @@ td {
   border-radius: 1rem;
   margin: 1rem;
 }
+
+.weather_box {
+  background-color: white;
+  border-radius: 1rem;
+  width: 5rem;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
