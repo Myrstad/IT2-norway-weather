@@ -39,7 +39,7 @@ def display_weather(query:str):
 
 @app.route("/place/<string:place_name>")
 def get_place_info(place_name):
-    response = requests.get(f'https://ws.geonorge.no/stedsnavn/v1/navn?sok={place_name}')
+    response = requests.get(f'https://ws.geonorge.no/stedsnavn/v1/navn?sok={place_name}&fuzzy=true&treffPerSide=30')
     return response.json()
 
 @app.route("/search/", methods=["POST", "GET"])
