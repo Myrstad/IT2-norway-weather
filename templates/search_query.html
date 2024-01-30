@@ -10,7 +10,7 @@
     <ul>
         {% for place in result.navn %}
             <li>
-                <a href="/weather/{{place.representasjonspunkt.nord}},{{place.representasjonspunkt.øst}}">
+                <a href="/weather/{{place.representasjonspunkt.nord}},{{place.representasjonspunkt.øst}},{{place.skrivemåte}}">
                 {{ place.skrivemåte }} i
                 {{ place.kommuner[0].kommunenavn}}, 
                 {{ place.fylker[0].fylkesnavn}} 
