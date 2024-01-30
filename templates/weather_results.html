@@ -12,6 +12,17 @@
                 <td>
                     {{ hour.time }}
                 </td>
+                {% if hour.data.next_1_hours  %}
+                    <td>
+                        {{ hour.data.next_1_hours.summary.symbol_code + ".svg" }}
+                    </td>
+                    <td style="color: blue">
+                        {{ hour.data.next_1_hours.details.precipitation_amount }}mm
+                    </td>
+                {% else %}
+                    <td></td>
+                    <td></td>
+                {% endif %}
             
             </tr>
         {% endfor %} 
