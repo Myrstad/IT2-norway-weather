@@ -15,14 +15,14 @@
  
     <table>
         {% for hour in result %}
-            <tr>
-                <td>
-                    {{ hour.data.instant.details.air_temperature }}°
-                </td>
-                <td>
-                    {{ hour.time }}
-                </td>
-                {% if hour.data.next_1_hours  %}
+            {% if hour.data.next_1_hours  %}
+                <tr>
+                    <td>
+                        {{ hour.data.instant.details.air_temperature }}°
+                    </td>
+                    <td>
+                        {{ hour.time }}
+                    </td>
                     <td>
                         {% set svg_filename = hour.data.next_1_hours.summary.symbol_code + ".svg" %}
                         <img width="64" height="64" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="Your SVG">
@@ -30,12 +30,8 @@
                     <td style="color: blue">
                         {{ hour.data.next_1_hours.details.precipitation_amount }}mm
                     </td>
-                {% else %}
-                    <td></td>
-                    <td></td>
-                {% endif %}
-            
-            </tr>
+                </tr>
+            {% endif %}
         {% endfor %} 
     </table>
 {% endblock %}
