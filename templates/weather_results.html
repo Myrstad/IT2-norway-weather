@@ -14,7 +14,8 @@
                 </td>
                 {% if hour.data.next_1_hours  %}
                     <td>
-                        {{ hour.data.next_1_hours.summary.symbol_code + ".svg" }}
+                        {% set svg_filename = hour.data.next_1_hours.summary.symbol_code + ".svg" %}
+                        <img width="64" height="64" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="Your SVG">
                     </td>
                     <td style="color: blue">
                         {{ hour.data.next_1_hours.details.precipitation_amount }}mm
