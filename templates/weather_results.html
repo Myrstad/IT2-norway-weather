@@ -41,7 +41,36 @@
                 {% endif %}
             {% endfor %} 
         </table>
+        <button id="knapp">Vis mer/mindre</button>
     </div>
 
+    <script>
+        const button = document.querySelector("#knapp")
+        const tableRows = document.querySelectorAll("table tr");
+        tableRows.forEach((row, index) => {
+                    if (index >= 4) {
+                        row.style.display = "none"
+                    }
+                })
+        let expanded = false;
+
+        button.addEventListener('click',()=>{
+            if (expanded) expanded=false
+            else expanded = true
+
+            if (expanded) {
+                tableRows.forEach(row=>{
+                    row.style.display = "table-row"
+                })
+            } else {
+                tableRows.forEach((row, index) => {
+                    if (index >= 4) {
+                        row.style.display = "none"
+                    }
+                })
+            }
+        })
+    </script>
  
 {% endblock %}
+
