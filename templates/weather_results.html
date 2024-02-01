@@ -33,12 +33,24 @@
                         </td>
                         <td>
                             {{ hour.data.instant.details.wind_speed }}m/s 
-                            <div class="arrow" style=`transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); display: inline-block;`>
+                            <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); inline-block;">
                                 <b>&DownArrow;</b>
                             </div>
                         </td>
                     </tr>
                 {% endif %}
+            {% endfor %} 
+        </table>
+        <table class="weather_table">
+            {% for day in days %}
+             
+                    <tr>
+                        <td>
+                            AHAHAHAH{{ day }}°
+                        </td>
+                    </tr>
+              
+                
             {% endfor %} 
         </table>
     </div>
