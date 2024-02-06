@@ -13,7 +13,7 @@
             <div class="weather_box">
                 <img width="64" height="64" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="">
             </div>
-        </div>
+        </div> 
         <table class="weather_table">
             {% for hour in result %}
                 {% if hour.data.next_1_hours  %}
@@ -28,7 +28,7 @@
                             {% set svg_filename = hour.data.next_1_hours.summary.symbol_code + ".svg" %}
                             <img width="64" height="64" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="">
                         </td>
-                        <td style="color: blue">
+                        <td style="color: rgb(0, 0, 150)">
                             {{ hour.data.next_1_hours.details.precipitation_amount }}mm
                         </td>
                         <td>
