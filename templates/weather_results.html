@@ -13,7 +13,7 @@
             <div class="weather_box">
                 <img width="64" height="64" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="">
             </div>
-        </div>
+        </div> 
         <table class="weather_table">
             {% for hour in result %}
                 {% if hour.data.next_1_hours  %}
@@ -28,12 +28,12 @@
                             {% set svg_filename = hour.data.next_1_hours.summary.symbol_code + ".svg" %}
                             <img width="64" height="64" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="">
                         </td>
-                        <td style="color: blue">
+                        <td style="color: rgb(0, 0, 150)">
                             {{ hour.data.next_1_hours.details.precipitation_amount }}mm
                         </td>
                         <td>
                             {{ hour.data.instant.details.wind_speed }}m/s 
-                            <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); display: inline-block">
+                            <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); inline-block;">
                                 <b>&DownArrow;</b>
                             </div>
                         </td>
@@ -41,36 +41,19 @@
                 {% endif %}
             {% endfor %} 
         </table>
-        <button id="knapp">Vis mer/mindre</button>
+        <table class="weather_table">
+            {% for day in days %}
+             
+                    <tr>
+                        <td>
+                            AHAHAHAH{{ day }}°
+                        </td>
+                    </tr>
+              
+                
+            {% endfor %} 
+        </table>
     </div>
 
-    <script>
-        const button = document.querySelector("#knapp")
-        const tableRows = document.querySelectorAll("table tr");
-        tableRows.forEach((row, index) => {
-                    if (index >= 4) {
-                        row.style.display = "none"
-                    }
-                })
-        let expanded = false;
-
-        button.addEventListener('click',()=>{
-            if (expanded) expanded=false
-            else expanded = true
-
-            if (expanded) {
-                tableRows.forEach(row=>{
-                    row.style.display = "table-row"
-                })
-            } else {
-                tableRows.forEach((row, index) => {
-                    if (index >= 4) {
-                        row.style.display = "none"
-                    }
-                })
-            }
-        })
-    </script>
  
 {% endblock %}
-

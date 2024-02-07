@@ -99,14 +99,22 @@ td {
   border: 1px solid black;
 }
 
+.weather_content {
+  padding: 1rem;
+  border-radius: 1rem;
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
 .current_weather {
   font-size: 2rem;
   font-weight: 750;
   background-color: rgb(76, 130, 224);
   color: white;
-  padding: 1rem;
   border-radius: 1rem;
-  margin: 1rem;
+  padding: 1rem;
+  
 }
 
 .weather_box {
