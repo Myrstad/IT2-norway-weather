@@ -1,7 +1,97 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   background-color: aliceblue;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+header {
+  max-width: calc(1312px + 2rem);
+  padding: 0 1rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+  color: black;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+header img {
+  border-radius: 4px;
+  background-color: black;
+}
+
+header a {
+  color: inherit;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+header form {
+  outline: 2px solid #333;
+  outline-offset: -1px;
+  height: 3rem;
+  position: relative;
+  border-radius: 1.5rem;
+  width: 262px;
+}
+
+header input[type="text"] {
+  border: none;
+  background-color: transparent;
+  border-radius: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 4rem;
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+}
+
+header input[type="submit"] {
+  position: absolute;
+  right: 0;
+  height: 3rem;
+  width: 3rem;
+  border-radius: 1.5rem;
+  border: none;
+  font-size: 1rem;
+  outline: 2px solid #333;
+  outline-offset: -1px;
+  background-color: #FEF4BE;
+}
+
+header label {
+  display: none;
+}
+
+main {
+  max-width: calc(1312px + 2rem);
+  padding: 0 1rem;
+  margin: 0 auto;
+  color: #333;
+}
+
+h1 {
+  font-size: 4rem;
+  line-height: 120%;
+  margin: 0;
+  margin-top: 4.75rem;
+}
+
 table {
   border-collapse: collapse;
 }
