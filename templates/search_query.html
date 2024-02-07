@@ -3,9 +3,8 @@
 {% block title %}Search{% endblock %} 
 
 {% block content%}
-    {% include 'search_form.html' %}
-    <h1>Search results</h1>
-    <p>Showing results for "{{ query }}"</p>
+    <h1>Query results</h1>
+    <p>Showing results for '{{ query }}'</p>
 
     <ul>
         {% for place in result.navn %}

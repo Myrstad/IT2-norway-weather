@@ -3,6 +3,17 @@
 {% block title %}Index{% endblock %} 
 
 {% block content%}
-  <h1>Test 😫</h1>
-  <a href="/search/">Go to search</a>
+  <h1>The Norwegian weather application</h1>
+  <p>Norway's weather, mastered. Nationwide forecasts, hyperlocal accuracy. Made for the subject IT2.</p>
+  <a href="/search/">Try it now</a>
+  <a href="/weather/59.20961,9.60901,Skien_By_Skien_Telemark">Weather in Skien, Norway</a>
+  
+  <style>
+    body {
+      background-image: url("{{url_for('static', filename='wallpaper.png')}}");
+      background-attachment: fixed;
+      background-size: cover;
+    }
+  </style>
 {% endblock %}
+

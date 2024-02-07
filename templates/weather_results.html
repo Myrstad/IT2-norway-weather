@@ -3,7 +3,7 @@
 {% block title %}Weather results{% endblock %} 
 
 {% block content%}
-    <h1>Showing weather for {{ place.split("_")[0] }}</h1>
+    <h1>Weather in {{ place.split("_")[0] }}</h1>
     <p>{{ ", ".join(place.split("_")[1:]) }}</p>
     <div class="weather_content">
         <div class="current_weather">
