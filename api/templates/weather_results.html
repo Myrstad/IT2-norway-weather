@@ -1,38 +1,77 @@
 {% extends 'base.html' %}
-
 {% block title %}Weather results{% endblock %} 
-
 {% block content%}
-    <h1>Weather in {{ place.split("_")[0] }}</h1>
+    <h1>Showing weather for {{ place.split("_")[0] }}</h1>
     <p>{{ ", ".join(place.split("_")[1:]) }}</p>
+    <div class="weather_table_overview">
+        {% for day in days %}
+        <div class="weather_box">
+           
+                <h1>
+                    {{day.weekday}} 
+                </h1>
+                <h3>
+                    {{day.date}} 
+                </h3>
+               
+                {% set svg_filename = day.icon + ".svg" %}
+                <div class="container">
+                    <img src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="">
+                    <h2>
+                        {{ day.max }}° / {{ day.min }}°
+                    </h2>
+                </div>
+            
+ 
+
+        </div>
+
+        {% endfor %} 
+    </div>
+    </table>
+ 
     <div class="weather_content">
-        <div class="current_weather">
-            {{ current.data.instant.details.air_temperature }}°
-            {% set svg_filename = current.data.next_1_hours.summary.symbol_code + ".svg" %}
-            <br>
-            <div class="weather_box">
-                <img width="64" height="64" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="">
-            </div>
-        </div> 
+        
+        <p class="time_for_time">Time for time</p>
+        <button id="knapp">Vis mer</button>
         <table class="weather_table">
+            <colgroup>
+                <col style="width: 30%;">
+                <col style="width: 15%;">
+                <col style="width: 20%;">
+                <col style="width: 15%;">
+              
+                <!-- Add more columns as needed -->
+            </colgroup>
+                <tr>
+                    <th>Når</th>
+                    <th>Vær</th>
+                    <th>Temperatur</th>
+                    <th>Nedbør</th>
+                    <th>Vind</th>
+                </tr>
             {% for hour in result %}
                 {% if hour.data.next_1_hours  %}
                     <tr>
-                        <td>
-                            {{ hour.data.instant.details.air_temperature }}°
-                        </td>
                         <td>
                             {{ hour.time }}
                         </td>
                         <td>
                             {% set svg_filename = hour.data.next_1_hours.summary.symbol_code + ".svg" %}
-                            <img width="64" height="64" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="">
+                            <img width="48" height="48" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="">
                         </td>
+                        <td>
+                            {{ hour.data.instant.details.air_temperature }}°
+                        </td>
+                        
+                    
+                  
                         <td style="color: rgb(0, 0, 150)">
                             {{ hour.data.next_1_hours.details.precipitation_amount }}mm
                         </td>
                         <td>
                             {{ hour.data.instant.details.wind_speed }}m/s 
+                            <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); display: inline-block">
                             <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); inline-block;">
                                 <b>&DownArrow;</b>
                             </div>
@@ -41,19 +80,38 @@
                 {% endif %}
             {% endfor %} 
         </table>
-        <table class="weather_table">
-            {% for day in days %}
-             
-                    <tr>
-                        <td>
-                            AHAHAHAH{{ day }}°
-                        </td>
-                    </tr>
-              
-                
-            {% endfor %} 
-        </table>
+        
+ 
     </div>
 
- 
+    <script>
+        const button = document.querySelector("#knapp")
+        const tableRows = document.querySelectorAll("table.weather_table tr");
+        tableRows.forEach((row, index) => {
+                    if (index >= 6) {
+                        row.style.display = "none"
+                    }
+                })
+        let expanded = false;
+
+        button.addEventListener('click',()=>{
+            if (expanded) expanded=false
+            else expanded = true
+
+            if (expanded) {
+                tableRows.forEach(row=>{
+                    row.style.display = "table-row"
+                })
+                button.innerHTML = "Vis mindre"
+            } else {
+                tableRows.forEach((row, index) => {
+                    if (index >= 4) {
+                        row.style.display = "none"
+                    }
+                })
+                button.innerHTML = "Vis mer"
+            }
+        })
+    </script>
+
 {% endblock %}

@@ -6,14 +6,17 @@
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
   </head>
   <body>
-    <header>
-      <a href="/" class="logo"><img src="" alt="" width="32" height="32">Weather project</a>
-      <nav>
-        <a href="/">Home</a>
-        <a href="/search/">Search</a>
-        {% include 'search_form.html' %}
-      </nav>
-    </header>
-    <main class="content">{% block content %} {% endblock %}</main>
+    <div class="header_container">
+      <header>
+        <a href="/" class="logo"><img src="" alt="" width="32" height="32">Weather project</a>
+        <nav>
+          <a href="/">Home</a>
+          <a href="/search/">Search</a>
+          {% include 'search_form.html' %}
+        </nav>
+      </header>
+      </div>
+      <main class="content">{% block content %} {% endblock %}</main>
+   
   </body>
 </html>
