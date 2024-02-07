@@ -3,16 +3,53 @@
 {% block title %}Index{% endblock %} 
 
 {% block content%}
-  <h1>The Norwegian weather application</h1>
-  <p>Norway's weather, mastered. Nationwide forecasts, hyperlocal accuracy. Made for the subject IT2.</p>
-  <a href="/search/">Try it now</a>
-  <a href="/weather/59.20961,9.60901,Skien_By_Skien_Telemark">Weather in Skien, Norway</a>
+  <div class="content">
+    <h1>The Norwegian weather application</h1>
+    <p>Norway's weather, mastered. Nationwide forecasts, hyperlocal accuracy. Made for the subject IT2.</p>
+    <div class="buttons">
+      <a class="button filled" href="/search/">Try it now</a>
+      <a class="button outline" href="/weather/59.20961,9.60901,Skien_By_Skien_Telemark">Weather in Skien, Norway</a>
+    </div>
+  </div>
   
   <style>
     body {
       background-image: url("{{url_for('static', filename='wallpaper.png')}}");
       background-attachment: fixed;
       background-size: cover;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    h1 {
+      padding-top: 1.25rem;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.8rem;
+    }
+
+    .button {
+      font-size: 1.5rem;
+      text-decoration: none;
+      padding: 1.5rem 3rem;
+      font-weight: 500;
+    }
+
+    .button.filled {
+      background-color: #333;
+      color: #fff;
+    }
+
+    .button.outline {
+      color: #333;
+      outline: 4px solid #333;
+      outline-offset: -4px;
     }
   </style>
 {% endblock %}
