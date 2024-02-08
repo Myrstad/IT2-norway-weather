@@ -49,6 +49,9 @@ def display_weather(query:str):
         hour["time"] = f"{time_and_date.strftime('%H:%M')}"
         hour["day"] = f"{weekday} {time_and_date.strftime('%d %B,')}"
         hour["data"]["instant"]["details"]["air_temperature"] = round(float(hour["data"]["instant"]["details"]["air_temperature"]))
+        if not hour.get("data").get("next_1_hours"):
+            if (hour.get("data").get("next_6_hours")):
+                hour["data"]["next_1_hours"] = hour["data"]["next_6_hours"]
         
         current_day_temp.append(hour["data"]["instant"]["details"]["air_temperature"])
        

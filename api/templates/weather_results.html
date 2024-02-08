@@ -3,6 +3,7 @@
 {% block content%}
     <h1>Været i {{ place.split("_")[0] }}</h1>
     <p>{{ ", ".join(place.split("_")[1:]) }}</p>
+    <p>Klikk for å se time for time</p>
     <p id="section_count" style="display: none;">{{ section_count }}</p>
     <div class="weather_table_overview">
         {% for day in days %}
@@ -63,11 +64,10 @@
                                 {{ hour.time }}
                             </td>
                             <td>
-                                {% if hour.data.next_1_hours  %}
+                           
                                     {% set svg_filename = hour.data.next_1_hours.summary.symbol_code + ".svg" %}
                                     <img width="48" height="48" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="">
-                                {%endif%}
-
+                           
                                 
                             </td>
                             <td>
@@ -101,6 +101,9 @@
     <script>
         const sectionCount = parseInt(document.querySelector("#section_count").innerHTML);
         const timeForTime = document.querySelector("#time_for_time");
+        const table = document.querySelector(".weather_table")
+
+        
 
         let sections = []
         let dayButtons = []
@@ -144,6 +147,12 @@
                                 }
                                 timeForTime.innerHTML = today + day.replace(",","")
                                 updatedTfT = true
+                                table.classList.remove('update_table'); // Remove the class to reset the animation
+                                
+                                setTimeout(() => {
+                                    table.classList.add('update_table'); // Re-add the class to start the animation again
+                                }, 10);
+                              
                             }
                       
                             section.forEach(row => {

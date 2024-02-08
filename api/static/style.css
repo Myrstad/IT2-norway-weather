@@ -147,13 +147,16 @@ h1 + p {
     /* background-color: rgb(185, 207, 245); */
     background-color: hsl(203, 50%, 95%);
   }
-
+  > .weather_box:first-child:hover {
+    /* background-color: rgb(185, 207, 245); */
+    background-color: hsl(206, 53%, 87%);
+  }
 
 }
 
 .weather_box{
   /* box-shadow: 10px 10px 20px rgb(189, 195, 197) inset; */
-  background-color: #f6f6f6;
+  background-color: #f5f5f5;
   position: relative;
   > h1 {
     font-size: 1.5rem;
@@ -193,7 +196,14 @@ h1 + p {
   margin: 1rem;
   padding: 1rem;
   border-radius: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
 }
+
+.weather_box:hover {
+  background-color: #ebedef;
+}
+
 
 .weather_content {
   padding: 1rem;
@@ -223,25 +233,41 @@ h1 + p {
   /* overflow: scroll; */
 }
 
+
+
 .weather_table {
 
   border: 1px solid black;
   padding: 1rem;
   table-layout:fixed;
   overflow-wrap: break-word;
+  margin-bottom: 3rem;
   
 }
 tr {
   word-wrap: break-word;
-
+  height: 3.5rem;
+  margin: 0;
 }
 
 th {
   text-align: left;
 }
 
+@keyframes update_alert {
+  0%   {background-color: rgb(255, 255, 255);}
+  20%  {background-color: rgb(146, 189, 239);}
+  100% {background-color: rgb(255, 255, 255);}
+}
 
-.time_for_time {
-  font-size: 2rem;
+.update_table {
+  animation-name: update_alert;
+  animation-duration: 1s;
+ 
+}
+
+
+#time_for_time {
+  font-size: 1.5rem;
   
 }
