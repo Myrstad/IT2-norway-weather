@@ -2,16 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>{% block title %} {% endblock %} - Weather Project</title>
+    <title>{% block title %} {% endblock %} - Værprosjekt</title>
     <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
   </head>
   <body>
     <div class="header_container">
       <header>
-        <a href="/" class="logo"><img src="" alt="" width="32" height="32">Weather project</a>
+        <a href="/" class="logo"><img src="" alt="" width="32" height="32">Værprosjekt IT2</a>
         <nav>
-          <a href="/">Home</a>
-          <a href="/search/">Search</a>
+          <a href="/">Hjem</a>
+          <a href="/search/">Søkeside</a>
           {% include 'search_form.html' %}
         </nav>
       </header>
