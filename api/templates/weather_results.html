@@ -3,9 +3,10 @@
 {% block content%}
     <h1>Showing weather for {{ place.split("_")[0] }}</h1>
     <p>{{ ", ".join(place.split("_")[1:]) }}</p>
+    <p id="section_count" style="display: none;">{{ section_count }}</p>
     <div class="weather_table_overview">
         {% for day in days %}
-        <div class="weather_box">
+        <div class="weather_box" id="day_{{day.section_index}}">
            
                 <h1>
                     {{day.weekday}} 
@@ -32,10 +33,11 @@
  
     <div class="weather_content">
         
-        <p class="time_for_time">Time for time</p>
-        <button id="knapp">Vis mer</button>
+        <p id="time_for_time">Time for time</p>
+       
         <table class="weather_table">
             <colgroup>
+               
                 <col style="width: 30%;">
                 <col style="width: 15%;">
                 <col style="width: 20%;">
@@ -50,34 +52,46 @@
                     <th>Nedbør</th>
                     <th>Vind</th>
                 </tr>
-            {% for hour in result %}
-                {% if hour.data.next_1_hours  %}
-                    <tr>
-                        <td>
-                            {{ hour.time }}
-                        </td>
-                        <td>
-                            {% set svg_filename = hour.data.next_1_hours.summary.symbol_code + ".svg" %}
-                            <img width="48" height="48" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="">
-                        </td>
-                        <td>
-                            {{ hour.data.instant.details.air_temperature }}°
-                        </td>
+            {% for section in separated_hours %}
+        
+                {% for hour in section.hours %}
+                   
+                        <tr class="section_{{section.index}}" style="display: none;">
+                            <td style="display: none;">{{ hour.day }}</td>
+                            <td>
+                    
+                                {{ hour.time }}
+                            </td>
+                            <td>
+                                {% if hour.data.next_1_hours  %}
+                                    {% set svg_filename = hour.data.next_1_hours.summary.symbol_code + ".svg" %}
+                                    <img width="48" height="48" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="">
+                                {%endif%}
+
+                                
+                            </td>
+                            <td>
+                                {{ hour.data.instant.details.air_temperature }}°
+                            </td>
+                            
                         
                     
-                  
-                        <td style="color: rgb(0, 0, 150)">
-                            {{ hour.data.next_1_hours.details.precipitation_amount }}mm
-                        </td>
-                        <td>
-                            {{ hour.data.instant.details.wind_speed }}m/s 
-                            <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); display: inline-block">
-                            <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); inline-block;">
-                                <b>&DownArrow;</b>
-                            </div>
-                        </td>
-                    </tr>
-                {% endif %}
+                            <td style="color: rgb(0, 0, 150)">
+                                {% if hour.data.next_1_hours  %}
+                                {{ hour.data.next_1_hours.details.precipitation_amount }}mm
+                                {%endif%}
+                            
+                            </td>
+                            <td>
+                                {{ hour.data.instant.details.wind_speed }}m/s 
+                                <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); display: inline-block">
+                                <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); inline-block;">
+                                    <b>&DownArrow;</b>
+                                </div>
+                            </td>
+                        </tr>
+                    
+                {% endfor %} 
             {% endfor %} 
         </table>
         
@@ -85,33 +99,91 @@
     </div>
 
     <script>
-        const button = document.querySelector("#knapp")
-        const tableRows = document.querySelectorAll("table.weather_table tr");
-        tableRows.forEach((row, index) => {
-                    if (index >= 6) {
-                        row.style.display = "none"
-                    }
-                })
-        let expanded = false;
+        const sectionCount = parseInt(document.querySelector("#section_count").innerHTML);
+        const timeForTime = document.querySelector("#time_for_time");
 
-        button.addEventListener('click',()=>{
-            if (expanded) expanded=false
-            else expanded = true
+        let sections = []
+        let dayButtons = []
 
-            if (expanded) {
-                tableRows.forEach(row=>{
-                    row.style.display = "table-row"
-                })
-                button.innerHTML = "Vis mindre"
-            } else {
-                tableRows.forEach((row, index) => {
-                    if (index >= 4) {
-                        row.style.display = "none"
-                    }
-                })
-                button.innerHTML = "Vis mer"
-            }
+        for (let i = 0; i < sectionCount; i++) {
+            let dayButton = document.querySelector("#day_" + i);
+            dayButtons.push(dayButton);
+            let rows = document.querySelectorAll(".section_" + i) 
+        
+            sections.push(rows)
+        } 
+
+        sections[0].forEach(row => {
+            row.style.display = "table-row"
+            timeForTime.innerHTML = "I dag, " + row.firstElementChild.innerHTML.replace(",","")
         })
+
+        dayButtons.forEach((button, buttonIndex) => {
+            button.addEventListener('click',()=>{
+                let updatedTfT = false
+                sections.forEach(section => {
+                    section.forEach(row => {
+                        row.style.display = "none"
+                    })
+                   
+                    sections.forEach((section, sectionIndex) => {
+                     
+                        
+                        if (sectionIndex != buttonIndex) {
+                            section.forEach(row => {
+                                row.style.display = "none"
+                            })  
+                        }
+                        else {
+                            if (!updatedTfT) {
+                                let day = section[0].firstElementChild.innerHTML
+                                console.log(day)
+                                let today = ""
+                                if (buttonIndex == 0) {
+                                    today = "I dag, "
+                                }
+                                timeForTime.innerHTML = today + day.replace(",","")
+                                updatedTfT = true
+                            }
+                      
+                            section.forEach(row => {
+                                
+                                //timeForTime.innerHTML = row.firstChild.innerHTML.trim().split(",")[0];
+                                row.style.display = "table-row"
+                            })
+                        }  
+                    })
+                })
+            })
+        })
+
+        
+        //     // if (expanded) expanded=false
+        //     // else expanded = true
+
+         
+
+       
+
+        //     current += 1;
+        //     if (current > sectionCount) {
+        //         current = 0;
+        //     }
+
+        //     // if (expanded) {
+        //     //     tableRows.forEach(row=>{
+        //     //         row.style.display = "table-row"
+        //     //     })
+        //     //     button.innerHTML = "Vis mindre"
+        //     // } else {
+        //     //     tableRows.forEach((row, index) => {
+        //     //         if (index >= 4) {
+        //     //             row.style.display = "none"
+        //     //         }
+        //     //     })
+        //     //     button.innerHTML = "Vis mer"
+        //     // }
+        // })
     </script>
 
 {% endblock %}

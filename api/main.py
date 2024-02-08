@@ -26,7 +26,13 @@ def display_weather(query:str):
     date = ""
    
     current_hour = hours[0]
-    
+
+    accumulated_hours = []
+    separated_hours = []
+
+    skip_next = False
+    counter = 0
+
     for hour in hours:
 
         # dt_obj = datetime.fromisoformat(hour["time"].replace("Z", "+00:00"))
@@ -40,18 +46,29 @@ def display_weather(query:str):
         if last_day == "":
             last_day = weekday
         
-        hour["time"] = f"{weekday} klokka {time_and_date.strftime('%H:%M')}"
+        hour["time"] = f"{time_and_date.strftime('%H:%M')}"
+        hour["day"] = f"{weekday} {time_and_date.strftime('%d %B,')}"
         hour["data"]["instant"]["details"]["air_temperature"] = round(float(hour["data"]["instant"]["details"]["air_temperature"]))
         
         current_day_temp.append(hour["data"]["instant"]["details"]["air_temperature"])
+       
 
         if last_day != weekday:
             if current_day_temp:  # Check if current_day_temp has entries to avoid division by zero.
                 max_temp = np.max(current_day_temp)  # Calculate max temperature for the day.
                 min_temp = np.min(current_day_temp)  # Calculate max temperature for the day.
                 if hour.get("data").get("next_12_hours"):
-                    days.append({"max":str(max_temp), "min":str(min_temp), "weekday":str(last_day), "date":str(date), "icon":hour["data"]["next_12_hours"]["summary"]["symbol_code"]})  # Append max temperature with the correct day's name.
-                    
+                    days.append({"section_index":counter, "max":str(max_temp), "min":str(min_temp), "weekday":str(last_day), "date":str(date), "icon":hour["data"]["next_12_hours"]["summary"]["symbol_code"]})  # Append max temperature with the correct day's name.
+
+          
+            
+            separated_hours.append({"hours":accumulated_hours, "index":str(counter)})
+            # if not hour["data"].get("next_1_hours):
+
+            #     skip_next = True
+            counter += 1
+            
+            accumulated_hours = []       
             print(current_day_temp, file=sys.stdout)
             # Reset for the next day's data.
             current_day_temp = [hour["data"]["instant"]["details"]["air_temperature"]]  # Start new day with the current hour's temperature.
@@ -60,10 +77,12 @@ def display_weather(query:str):
             # If still within the same day, just keep collecting temperatures.
             current_day_temp.append(hour["data"]["instant"]["details"]["air_temperature"])
         date = time_and_date.strftime(' %d. %B')
+        accumulated_hours.append(hour)
     #temps = [x["data"]["instant"]["details"]["air_temperature"] for x in hours]
-  
+    
     print(days, file=sys.stdout)
-    return render_template('weather_results.html', result=hours, days=days, place=place, current=current_hour)
+    current_day = datetime.now().strftime('%A').capitalize()
+    return render_template('weather_results.html', current_day=current_day, section_count=counter, separated_hours=separated_hours, result=hours, days=days, place=place, current=current_hour)
     #return response.json()
 
 @app.route("/place/<string:place_name>")
