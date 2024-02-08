@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% block title %}Weather results{% endblock %} 
+{% block title %}Været i {{place.split("_")[0]}}{% endblock %} 
 {% block content%}
-    <h1>Showing weather for {{ place.split("_")[0] }}</h1>
+    <h1>Været i {{ place.split("_")[0] }}</h1>
     <p>{{ ", ".join(place.split("_")[1:]) }}</p>
     <p id="section_count" style="display: none;">{{ section_count }}</p>
     <div class="weather_table_overview">

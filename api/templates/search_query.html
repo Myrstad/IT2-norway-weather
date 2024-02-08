@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Search{% endblock %} 
+{% block title %}Søk - {{ query }}{% endblock %} 
 
 {% block content%}
-    <h1>Query results</h1>
-    <p>Showing results for '{{ query }}'</p>
+    <h1>Søkeresultater</h1>
+    <p>Viser resultatene til '{{ query }}'</p>
 
     <ul>
         {% for place in result.navn %}
