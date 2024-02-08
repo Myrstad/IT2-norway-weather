@@ -5,5 +5,34 @@
 {% block content%}
   <h1>Søk</h1>
   <p>Brut et stedsnavn i Norge</p>
-  {% include 'search_form.html' %}
+  <div class="form">
+    {% include 'search_form.html' %}
+  </div>
+
+  <style>
+    .form label {
+      display: block;
+      margin-top: 1rem;
+    }
+
+    .form input[type="text"] {
+      border: none;
+      width: 282px;
+      padding: 1rem 2rem;
+      outline: 2px solid #333;
+      outline-offset: -2px;
+      color: #333;
+      font-size: 1rem;
+      line-height: 100%;
+    }
+
+    .form input[type="submit"] {
+      border: none;
+      background-color: #333;
+      color: white;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      line-height: 19.2px;
+    }
+  </style>
 {% endblock %}
