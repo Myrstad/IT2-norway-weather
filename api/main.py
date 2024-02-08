@@ -49,7 +49,9 @@ def display_weather(query:str):
             if current_day_temp:  # Check if current_day_temp has entries to avoid division by zero.
                 max_temp = np.max(current_day_temp)  # Calculate max temperature for the day.
                 min_temp = np.min(current_day_temp)  # Calculate max temperature for the day.
-                days.append({"max":str(max_temp), "min":str(min_temp), "weekday":str(last_day), "date":str(date), "icon":hour["data"]["next_12_hours"]["summary"]["symbol_code"]})  # Append max temperature with the correct day's name.
+                if hour.get("data").get("next_12_hours"):
+                    days.append({"max":str(max_temp), "min":str(min_temp), "weekday":str(last_day), "date":str(date), "icon":hour["data"]["next_12_hours"]["summary"]["symbol_code"]})  # Append max temperature with the correct day's name.
+                    
             print(current_day_temp, file=sys.stdout)
             # Reset for the next day's data.
             current_day_temp = [hour["data"]["instant"]["details"]["air_temperature"]]  # Start new day with the current hour's temperature.
@@ -60,7 +62,7 @@ def display_weather(query:str):
         date = time_and_date.strftime(' %d. %B')
     #temps = [x["data"]["instant"]["details"]["air_temperature"] for x in hours]
   
-   
+    print(days, file=sys.stdout)
     return render_template('weather_results.html', result=hours, days=days, place=place, current=current_hour)
     #return response.json()
 

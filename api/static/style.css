@@ -38,6 +38,7 @@ header {
   right: 0;
   background-color: rgb(255 255 255 / .4);
   backdrop-filter: blur(0.25rem);
+  z-index: 1;
 }
 
 header .logo {
