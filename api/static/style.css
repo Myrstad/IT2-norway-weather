@@ -157,7 +157,8 @@ h1 + p {
   width: 16rem;
   aspect-ratio: 1;
 
-  margin: 1rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
   padding: 1rem;
   border-radius: 1rem;
   cursor: pointer;
@@ -286,12 +287,21 @@ th {
 }
 
 @media screen and (max-width: 700px) {
-  /* .weather_content {
-    max-width: 90%;
+  .weather_table_overview {
+    padding: 0;
   }
-  main {
-    width: calc(700px - 2rem);
-  } */
+
+  .weather_content {
+     width: 100%;
+     max-width: 100%;
+     margin: 0;
+     padding: 0;
+  }
+
+  .weather_table {
+    margin: 0;
+  }
+
   .header_container {
     backdrop-filter: none;
     background-color: transparent;
