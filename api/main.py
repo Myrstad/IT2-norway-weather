@@ -1,6 +1,5 @@
 from flask import Flask, request, redirect, url_for, render_template
 import requests
-import json
 from datetime import datetime
 import locale
 import numpy as np
@@ -10,6 +9,12 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello_world():
+    """
+    Renders the "index.html" template as the response for the root route.
+
+    Returns:
+        str: The rendered HTML content of the "index.html" template.
+    """
     return render_template("index.html")
 
 @app.route("/weather/<query>")
@@ -114,23 +119,57 @@ def display_weather(query:str):
 
 @app.route("/place/<string:place_name>")
 def get_place_info(place_name):
-    response = requests.get(f'https://ws.geonorge.no/stedsnavn/v1/navn?sok={place_name}&fuzzy=true&treffPerSide=30')
+    """Retrieves information about a place from the Geonorge API.
+
+   Args:
+       place_name: The name of the place to search for.
+
+   Returns:
+       dict: The JSON response from the Geonorge API, containing place information.
+   """
+    response = requests.get(
+        f'https://ws.geonorge.no/stedsnavn/v1/navn?sok={place_name}&fuzzy=true&treffPerSide=30'
+    )
+
     return response.json()
 
 @app.route("/search/", methods=["POST", "GET"])
 def search_get():
+    """Handles requests for the search page and redirecting after POST.
+
+    Returns:
+        Union[TemplateResponse, Response]:
+            - If the request is a GET, returns the rendered "search.html" template.
+            - If the request is a POST with valid search content, returns a redirect to
+              the "search_result" view with the search query in the URL.
+    """
+
     if request.method == "GET":
         return render_template("search.html")
     else:
-        search_content = request.form['search_content']
-        return redirect(url_for(endpoint='search_result', query=search_content))
+        search_content = request.form.get("search_content")
+
+        if search_content:
+            return redirect(url_for(endpoint="search_result", query=search_content))
+        else:
+            return redirect(url_for("search_get"))  # Example redirect to search
+
+
+
 
 @app.route("/search/<query>")
 def search_result(query:str):
+    """Displays search results for a given place query.
+
+    Args:
+        query: The place name or location to search for (str).
+
+    Returns:
+        TemplateResponse: The rendered "search_query.html" template with
+                        search results (dict) and the original query (str).
+
+    Raises:
+        HTTPException: If an error occurs during the search or rendering process.
+    """
     dictonary = get_place_info(query)
-    #lon = dictonary["representasjonspunkt"]
-    #lat = 
     return render_template('search_query.html', result=dictonary, query=query)
-    #info = [(x['fylker'][0]['fylkesnavn'], x['kommuner'][0]['kommunenavn'], x['skrivemåte'], x['representasjonspunkt']['nord'], x['representasjonspunkt']['øst']) for x in dictonary['navn']]
-    #lenker = "".join([f'<p><a href="/weather/{x[-2]},{x[-1]}">{x[2]}, {x[1]}, {x[0]}</a></p>' for x in info])
-    #return lenker
