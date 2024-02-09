@@ -3,7 +3,7 @@
 {% block content%}
     <h1>Været i {{ place.split("_")[0] }}</h1>
     <p>{{ ", ".join(place.split("_")[1:]) }}</p>
-    <p>Klikk for å se time for time</p>
+    <p>Trykk for å se time for time</p>
     <p id="section_count" style="display: none;">{{ section_count }}</p>
     <div class="weather_table_overview">
         {% for day in days %}
