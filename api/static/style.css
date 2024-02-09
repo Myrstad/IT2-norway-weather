@@ -254,10 +254,10 @@ h1 + p {
   padding: 1rem;
   table-layout:fixed;
   overflow-wrap: break-word;
-  margin-bottom: 3rem;
   overflow-x: scroll;
   
 }
+
 tr {
   word-wrap: break-word;
   height: 3.5rem;
@@ -364,7 +364,7 @@ th {
     top: 0;
     left: calc(100% + 2rem);
     right: calc(-100% - 2rem);
-    height: calc(100vh);
+    height: 100%;
     z-index: 2;
     display: flex;
     justify-content: center;
