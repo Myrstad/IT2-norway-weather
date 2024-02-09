@@ -9,10 +9,10 @@
     <ul>
         {% for place in result.navn %}
             <li>
-                <a href="/weather/{{place.representasjonspunkt.nord}},{{place.representasjonspunkt.øst}},{{place.skrivemåte}}_{{place.navneobjekttype}}_{{place.kommuner[0].kommunenavn}}_{{place.fylker[0].fylkesnavn}}">
+                <a href="/weather/{{place.representasjonspunkt.nord}},{{place.representasjonspunkt.øst}},{{place.skrivemåte}}_{{place.navneobjekttype}}_{{place.kommuner[0].kommunenavn if place.kommuner != None else 'Ukjent'}}_{{place.fylker[0].fylkesnavn if place.fylker != None else 'Ukjent'}}">
                 {{ place.skrivemåte }} ({{ place.navneobjekttype}}),
-                {{ place.kommuner[0].kommunenavn}}, 
-                {{ place.fylker[0].fylkesnavn}} 
+                {{ place.kommuner[0].kommunenavn if place.kommuner != None else "Ukjent" }}, 
+                {{ place.fylker[0].fylkesnavn if place.fylker != None else "Ukjent" }}
                 </a>
             </li>
         {% endfor %} 
