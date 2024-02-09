@@ -334,7 +334,7 @@ th {
 
   header nav {
     background-color: rgb(255 255 255 / .8);
-    backdrop-filter: blur(.25rem);
+    backdrop-filter: blur(0.25rem);
     position: fixed;
     top: 4rem;
     left: calc(100% + 2rem);
