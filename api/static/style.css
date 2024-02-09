@@ -202,10 +202,7 @@ h1 + p {
   background-color: hsl(203, 53%, 94%);
   box-shadow: 0.3rem 0.5rem 1rem rgb(208, 213, 214);
   transform: translateY(-0.5rem);
-
 }
-
-
 
 .weather_box:hover {
   background-color: #ebedef;
@@ -223,7 +220,7 @@ h1 + p {
   margin: 1rem;
   display: flex;
   flex-direction: column;
-  width: 40rem;
+  max-width: 50%;
   position: relative;
   margin: 0px auto;
   > #knapp {
