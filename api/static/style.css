@@ -300,7 +300,7 @@ footer {
     max-width: 1312px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
 }
@@ -324,6 +324,7 @@ footer {
   .header_container {
     backdrop-filter: none;
     background-color: transparent;
+    background-color: white;
   }
 
   header .logo,
@@ -411,5 +412,9 @@ footer {
 
   h1 + p {
     font-size: 1.25rem;
+  }
+
+  footer .columns {
+    grid-template-columns: 1fr;
   }
 }
