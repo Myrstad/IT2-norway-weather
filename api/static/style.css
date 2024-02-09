@@ -9,6 +9,10 @@ body {
   padding-top: 4rem;
 }
 
+.no-scroll {
+  overflow: hidden;
+}
+
 header {
 
   max-width: calc(1312px + 2rem);

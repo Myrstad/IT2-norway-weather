@@ -23,12 +23,13 @@
       <main class="content">{% block content %} {% endblock %}</main>
       
       {% include 'footer.html' %}
-      
+
       <script>
         const header = document.querySelector("header")
         const navButton = document.querySelector("header button")
         navButton.addEventListener('click', ()=>{
           header.classList.toggle("expanded")
+          document.querySelector('body').classList.toggle('no-scroll')
         })
       </script>
   </body>
