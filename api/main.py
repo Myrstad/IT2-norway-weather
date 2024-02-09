@@ -14,79 +14,103 @@ def hello_world():
 
 @app.route("/weather/<query>")
 def display_weather(query:str):
+    # Split the input query to extract latitude, longitude, and place information.
     lat, lon, place = query.split(',')[0], query.split(',')[1], query.split(',')[-1]
+
+    # Make a GET request to the weather API with the specified latitude and longitude.
     response = requests.get(f'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={lat}&lon={lon}', headers={'user-agent': 'my-app/0.0.1'})
+
+    # Parse the JSON response to get the timeseries, excluding the first entry.
     hours = response.json()["properties"]["timeseries"][1:]
-    days = []
-    current_day_temp = []
-  
+
+    # Initialize variables for processing the weather data.
+    days = []  # To store daily summaries.
+    current_day_temp = []  # To store temperatures for the current processing day.
+
+    # Set the locale for date and time formatting to Norwegian (Bokmål).
     locale.setlocale(locale.LC_TIME, 'nb_NO')
+
+    # Initialize variables for tracking the current and last processed day.
     last_day = ""
     weekday = ""
     date = ""
-   
-    current_hour = hours[0]
 
-    accumulated_hours = []
-    separated_hours = []
-
-    skip_next = False
+    # Prepare variables for hourly data processing.
+    accumulated_hours = []  # To accumulate hourly data for the current day.
+    separated_hours = []  # To store separated hourly data by day.
     counter = 0
 
+    # Loop through each hour in the timeseries to process and format the data.
     for hour in hours:
-
-        # dt_obj = datetime.fromisoformat(hour["time"].replace("Z", "+00:00"))
-
-        # weekday = dt_obj.strftime("%A")
-        # time = dt_obj.hour
-        # hour["time"] = f"{weekday}, {time}"
+        # Convert the ISO format time to a datetime object, adjusting for timezone.
         time_and_date = datetime.strptime(hour["time"], "%Y-%m-%dT%H:%M:%SZ")
         weekday = time_and_date.strftime('%A').capitalize()
-        
+
+        # Initialize the last_day with the first hour's weekday if not already set.
         if last_day == "":
             last_day = weekday
-        
+
+        # Format the time and add a formatted day string to the hour dict.
         hour["time"] = f"{time_and_date.strftime('%H:%M')}"
         hour["day"] = f"{weekday} {time_and_date.strftime('%d %B,')}"
-        hour["data"]["instant"]["details"]["air_temperature"] = round(float(hour["data"]["instant"]["details"]["air_temperature"]))
-        if not hour.get("data").get("next_1_hours"):
-            if (hour.get("data").get("next_6_hours")):
-                hour["data"]["next_1_hours"] = hour["data"]["next_6_hours"]
         
+        # Round the air temperature for readability.
+        hour["data"]["instant"]["details"]["air_temperature"] = round(float(hour["data"]["instant"]["details"]["air_temperature"]))
+
+        # Handle missing short-term forecast data by using the 6-hour forecast if available.
+        if not hour.get("data").get("next_1_hours") and hour.get("data").get("next_6_hours"):
+            hour["data"]["next_1_hours"] = hour["data"]["next_6_hours"]
+        
+        # Add the current hour's temperature to the list for the current day.
         current_day_temp.append(hour["data"]["instant"]["details"]["air_temperature"])
-       
 
+        # Check if the day has changed based on the weekday.
         if last_day != weekday:
-            if current_day_temp:  # Check if current_day_temp has entries to avoid division by zero.
-                max_temp = np.max(current_day_temp)  # Calculate max temperature for the day.
-                min_temp = np.min(current_day_temp)  # Calculate max temperature for the day.
+            # If there are recorded temperatures for the day, process them.
+            if current_day_temp:
+                max_temp = np.max(current_day_temp)  # Find the maximum temperature for the day.
+                min_temp = np.min(current_day_temp)  # Find the minimum temperature for the day.
+                
+                # If there's a forecast for the next 12 hours, append the day's summary to the `days` list.
                 if hour.get("data").get("next_12_hours"):
-                    days.append({"section_index":counter, "max":str(max_temp), "min":str(min_temp), "weekday":str(last_day), "date":str(date), "icon":hour["data"]["next_12_hours"]["summary"]["symbol_code"]})  # Append max temperature with the correct day's name.
+                    days.append({
+                        "section_index": counter, 
+                        "max": str(max_temp), 
+                        "min": str(min_temp), 
+                        "weekday": str(last_day), 
+                        "date": str(date), 
+                        "icon": hour["data"]["next_12_hours"]["summary"]["symbol_code"]
+                    })
 
-          
+            # Accumulate and reset data for processing the next day.
+            separated_hours.append({"hours": accumulated_hours, "index": str(counter)})
+            counter += 1  # Increment the day counter.
             
-            separated_hours.append({"hours":accumulated_hours, "index":str(counter)})
-            # if not hour["data"].get("next_1_hours):
-
-            #     skip_next = True
-            counter += 1
-            
-            accumulated_hours = []       
+            # Print the current day's temperatures to stdout for debugging/logging.
             print(current_day_temp, file=sys.stdout)
-            # Reset for the next day's data.
-            current_day_temp = [hour["data"]["instant"]["details"]["air_temperature"]]  # Start new day with the current hour's temperature.
-            last_day = weekday  # Update last_day to the current day after processing.
+            
+            # Reset variables for the next day's processing.
+            accumulated_hours = []  # Reset the list of accumulated hours.
+            current_day_temp = [hour["data"]["instant"]["details"]["air_temperature"]]  # Start with the current hour's temperature.
+            last_day = weekday  # Update the last processed day.
         else:
-            # If still within the same day, just keep collecting temperatures.
+            # If still within the same day, continue accumulating temperatures.
             current_day_temp.append(hour["data"]["instant"]["details"]["air_temperature"])
+
+        # Update the date for the current processing hour.
         date = time_and_date.strftime(' %d. %B')
+        # Accumulate the current hour's data.
         accumulated_hours.append(hour)
-    #temps = [x["data"]["instant"]["details"]["air_temperature"] for x in hours]
-    
+
+    # Print the days list to stdout for debugging/logging.
     print(days, file=sys.stdout)
+
+    # Determine the current day's name for display purposes.
     current_day = datetime.now().strftime('%A').capitalize()
-    return render_template('weather_results.html', current_day=current_day, section_count=counter-1, separated_hours=separated_hours, result=hours, days=days, place=place, current=current_hour)
-    #return response.json()
+
+    # Render the weather results template with the processed data.
+    return render_template('weather_results.html', current_day=current_day, section_count=counter-1, separated_hours=separated_hours, result=hours, days=days, place=place, current=hours[0])
+
 
 @app.route("/place/<string:place_name>")
 def get_place_info(place_name):
