@@ -112,7 +112,10 @@ main {
   padding: 0 1rem;
   margin: 0 auto;
   color: #333;
+  height: fit-content;
 }
+
+
 
 h1 {
   font-size: 4rem;
@@ -227,6 +230,7 @@ h1 + p {
   max-width: 50%;
   position: relative;
   margin: 0px auto;
+  height: fit-content;
   > #knapp {
    
     background-color: #5382af;
