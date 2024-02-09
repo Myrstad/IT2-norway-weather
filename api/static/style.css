@@ -111,7 +111,9 @@ main {
   max-width: calc(1312px + 2rem);
   padding: 0 1rem;
   margin: 0 auto;
+  margin-top: 2rem;
   color: #333;
+  min-height: calc(100vh - 4rem);
 }
 
 h1 {
@@ -283,6 +285,20 @@ th {
 #time_for_time {
   font-size: 1.5rem;
   
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  padding: 3rem 1rem;
+
+  > .columns {
+    max-width: 1312px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
 }
 
 @media screen and (max-width: 700px) {

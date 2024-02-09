@@ -21,7 +21,9 @@
       </header>
       </div>
       <main class="content">{% block content %} {% endblock %}</main>
-
+      
+      {% include 'footer.html' %}
+      
       <script>
         const header = document.querySelector("header")
         const navButton = document.querySelector("header button")
