@@ -39,17 +39,17 @@
         <table class="weather_table">
             <colgroup>
                
-                <col style="width: 30%;">
-                <col style="width: 15%;">
                 <col style="width: 20%;">
-                <col style="width: 15%;">
+                <col style="width: 25%;">
+                <col style="width: 30%;">
+                <col style="width: 25%;">
               
                 <!-- Add more columns as needed -->
             </colgroup>
                 <tr>
                     <th>Når</th>
                     <th>Vær</th>
-                    <th>Temperatur</th>
+                    <th>Temp.</th> 
                     <th>Nedbør</th>
                     <th>Vind</th>
                 </tr>
@@ -63,6 +63,8 @@
                     
                                 {{ hour.time }}
                             </td>
+                        
+                            
                             <td>
                            
                                     {% set svg_filename = hour.data.next_1_hours.summary.symbol_code + ".svg" %}
@@ -70,11 +72,10 @@
                            
                                 
                             </td>
+                  
                             <td>
                                 {{ hour.data.instant.details.air_temperature }}°
                             </td>
-                            
-                        
                     
                             <td style="color: rgb(0, 0, 150)">
                                 {% if hour.data.next_1_hours  %}
