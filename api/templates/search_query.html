@@ -17,4 +17,7 @@
             </li>
         {% endfor %} 
     </ul>
+    {% if result.navn == [] %}
+        <h2>Ingen resultater! Sjekk skrivefeil og prøv igjen.</h2>
+    {% endif %}
 {% endblock %}
