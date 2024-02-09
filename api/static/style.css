@@ -296,6 +296,7 @@ footer {
   background-color: #333;
   color: white;
   padding: 3rem 1rem;
+  margin-top: 2rem;
 
   > .columns {
     max-width: 1312px;
