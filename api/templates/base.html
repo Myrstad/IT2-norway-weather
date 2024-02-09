@@ -10,14 +10,24 @@
     <div class="header_container">
       <header>
         <a href="/" class="logo"><img src="" alt="" width="32" height="32">Værprosjekt IT2</a>
-        <nav>
+        <nav id="navigation-nav">
           <a href="/">Hjem</a>
           <a href="/search/">Søkeside</a>
           {% include 'search_form.html' %}
         </nav>
+        <button role="navigation" aria-controls="navigation-nav">
+          <span></span><span></span><span></span>
+        </button>
       </header>
       </div>
       <main class="content">{% block content %} {% endblock %}</main>
-   
+
+      <script>
+        const header = document.querySelector("header")
+        const navButton = document.querySelector("header button")
+        navButton.addEventListener('click', ()=>{
+          header.classList.toggle("expanded")
+        })
+      </script>
   </body>
 </html>
