@@ -229,31 +229,13 @@ h1 + p {
   margin: 1rem;
   display: flex;
   flex-direction: column;
-  max-width: 50%;
+  max-width: calc(1312px / 2);
   position: relative;
   margin: 0px auto;
   height: fit-content;
-  > #knapp {
-   
-    background-color: #5382af;
-    border: none;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1.3rem;
-    margin: 4px 2px;
-    cursor: pointer;  
-    margin: 0px auto;
-    width: 100%;
-  }
 }
 
-
-
 .weather_table {
-
   border: 1px solid black;
   padding: 1rem;
   table-layout:fixed;
