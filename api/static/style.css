@@ -288,6 +288,16 @@ th {
 }
 
 @media screen and (max-width: 700px) {
+  .header_container {
+    backdrop-filter: none;
+    background-color: transparent;
+  }
+
+  header .logo,
+  header button {
+    z-index: 3;
+  }
+
   header button {
     display: block;
     width: 3rem;
@@ -337,10 +347,10 @@ th {
     -webkit-backdrop-filter: blur(0.25rem);
     backdrop-filter: blur(0.25rem);
     position: fixed;
-    top: 4rem;
+    top: 0;
     left: calc(100% + 2rem);
     right: calc(-100% - 2rem);
-    height: calc(100vh - 4rem);
+    height: calc(100vh);
     z-index: 2;
     display: flex;
     justify-content: center;
@@ -349,6 +359,7 @@ th {
     gap: 2rem;
     font-size: 2rem;
     padding: 1rem;
+    padding-top: 5rem;
     transition: left 500ms, right 500ms;
   }
 
