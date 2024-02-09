@@ -113,8 +113,11 @@ main {
   margin: 0 auto;
   margin-top: 2rem;
   color: #333;
+  height: fit-content;
   min-height: calc(100vh - 4rem);
 }
+
+
 
 h1 {
   font-size: 4rem;
@@ -159,7 +162,8 @@ h1 + p {
   width: 16rem;
   aspect-ratio: 1;
 
-  margin: 1rem;
+  margin-right: 1rem;
+  margin-top: 1rem;
   padding: 1rem;
   border-radius: 1rem;
   cursor: pointer;
@@ -228,6 +232,7 @@ h1 + p {
   max-width: 50%;
   position: relative;
   margin: 0px auto;
+  height: fit-content;
   > #knapp {
    
     background-color: #5382af;
@@ -255,10 +260,10 @@ h1 + p {
   padding: 1rem;
   table-layout:fixed;
   overflow-wrap: break-word;
-  margin-bottom: 3rem;
   overflow-x: scroll;
   
 }
+
 tr {
   word-wrap: break-word;
   height: 3.5rem;
@@ -302,12 +307,21 @@ footer {
 }
 
 @media screen and (max-width: 700px) {
-  /* .weather_content {
-    max-width: 90%;
+  .weather_table_overview {
+    padding: 0;
   }
-  main {
-    width: calc(700px - 2rem);
-  } */
+
+  .weather_content {
+     width: 100%;
+     max-width: 100%;
+     margin: 0;
+     padding: 0;
+  }
+
+  .weather_table {
+    margin: 0;
+  }
+
   .header_container {
     backdrop-filter: none;
     background-color: transparent;
@@ -370,7 +384,7 @@ footer {
     top: 0;
     left: calc(100% + 2rem);
     right: calc(-100% - 2rem);
-    height: calc(100vh);
+    height: 100%;
     z-index: 2;
     display: flex;
     justify-content: center;

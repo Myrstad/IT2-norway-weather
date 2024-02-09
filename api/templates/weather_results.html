@@ -23,11 +23,7 @@
                         {{ day.max }}° / {{ day.min }}°
                     </h2>
                 </div>
-            
- 
-
         </div>
-
         {% endfor %} 
     </div>
     </table>
@@ -37,65 +33,54 @@
         <p id="time_for_time">Time for time</p>
        
         <table class="weather_table">
-            <colgroup>
-               
+            <colgroup>        
                 <col style="width: 20%;">
                 <col style="width: 25%;">
                 <col style="width: 30%;">
-                <col style="width: 25%;">
-              
+                <col style="width: 25%;"> 
                 <!-- Add more columns as needed -->
             </colgroup>
-                <tr>
-                    <th>Når</th>
-                    <th>Vær</th>
-                    <th>Temp.</th> 
-                    <th>Nedbør</th>
-                    <th>Vind</th>
-                </tr>
+            <tr>
+                <th>Når</th>
+                <th>Vær</th>
+                <th>Temp.</th> 
+                <th>Nedbør</th>
+                <th>Vind</th>
+            </tr>
             {% for section in separated_hours %}
-        
-                {% for hour in section.hours %}
-                   
-                        <tr class="section_{{section.index}}" style="display: none;">
-                            <td style="display: none;">{{ hour.day }}</td>
-                            <td>
-                    
-                                {{ hour.time }}
-                            </td>
+                {% for hour in section.hours %}  
+                    <tr class="section_{{section.index}}" style="display: none;">
+                        <td style="display: none;">{{ hour.day }}</td>
+                        <td>                  
+                            {{ hour.time }}
+                        </td>
+                            
+                        <td>
+                            {% set svg_filename = hour.data.next_1_hours.summary.symbol_code + ".svg" %}
+                            <img width="48" height="48" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt=""> 
+                        </td>
+                
+                        <td>
+                            {{ hour.data.instant.details.air_temperature }}°
+                        </td>
+                
+                        <td style="color: rgb(0, 0, 150)">
+                            {% if hour.data.next_1_hours  %}
+                            {{ hour.data.next_1_hours.details.precipitation_amount }}mm
+                            {%endif%}
                         
-                            
-                            <td>
-                           
-                                    {% set svg_filename = hour.data.next_1_hours.summary.symbol_code + ".svg" %}
-                                    <img width="48" height="48" src="{{ url_for('static', filename='icons/' + svg_filename) }}" alt="">
-                           
-                                
-                            </td>
-                  
-                            <td>
-                                {{ hour.data.instant.details.air_temperature }}°
-                            </td>
-                    
-                            <td style="color: rgb(0, 0, 150)">
-                                {% if hour.data.next_1_hours  %}
-                                {{ hour.data.next_1_hours.details.precipitation_amount }}mm
-                                {%endif%}
-                            
-                            </td>
-                            <td>
-                                {{ hour.data.instant.details.wind_speed }}m/s 
-                                <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); display: inline-block">
-                                <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); inline-block;">
-                                    <b>&DownArrow;</b>
-                                </div>
-                            </td>
-                        </tr>
-                    
+                        </td>
+                        <td>
+                            {{ hour.data.instant.details.wind_speed }}m/s 
+                            <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); display: inline-block">
+                            <div class="arrow" style="transform: rotate({{ hour.data.instant.details.wind_from_direction }}deg); inline-block;">
+                                <b>&DownArrow;</b>
+                            </div>
+                        </td>
+                    </tr>        
                 {% endfor %} 
             {% endfor %} 
-        </table>
-        
+        </table>  
  
     </div>
 
