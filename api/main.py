@@ -85,7 +85,7 @@ def display_weather(query:str):
     
     print(days, file=sys.stdout)
     current_day = datetime.now().strftime('%A').capitalize()
-    return render_template('weather_results.html', current_day=current_day, section_count=counter, separated_hours=separated_hours, result=hours, days=days, place=place, current=current_hour)
+    return render_template('weather_results.html', current_day=current_day, section_count=counter-1, separated_hours=separated_hours, result=hours, days=days, place=place, current=current_hour)
     #return response.json()
 
 @app.route("/place/<string:place_name>")

@@ -143,16 +143,11 @@ h1 + p {
   overflow-y: hidden;
   height: 18rem;
   
-  > .weather_box:first-child {
-    /* background-color: rgb(185, 207, 245); */
-    background-color: hsl(203, 50%, 95%);
-  }
-  > .weather_box:first-child:hover {
-    /* background-color: rgb(185, 207, 245); */
-    background-color: hsl(206, 53%, 87%);
-  }
+
 
 }
+
+
 
 .weather_box{
   /* box-shadow: 10px 10px 20px rgb(189, 195, 197) inset; */
@@ -198,10 +193,27 @@ h1 + p {
   border-radius: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+  transition: box-shadow 0.1s ease-in-out;
+  transition: transform 0.1s ease-in-out;
 }
+
+.weather_box.active {
+  /* background-color: rgb(185, 207, 245); */
+  background-color: hsl(203, 53%, 94%);
+  box-shadow: 0.3rem 0.5rem 1rem rgb(208, 213, 214);
+  transform: translateY(-0.5rem);
+
+}
+
+
 
 .weather_box:hover {
   background-color: #ebedef;
+}
+
+
+.weather_box.active:hover {
+  background-color: #e1ecf3;
 }
 
 

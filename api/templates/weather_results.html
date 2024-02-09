@@ -102,7 +102,7 @@
         const sectionCount = parseInt(document.querySelector("#section_count").innerHTML);
         const timeForTime = document.querySelector("#time_for_time");
         const table = document.querySelector(".weather_table")
-
+        const boxes = document.querySelectorAll(".weather_box")
         
 
         let sections = []
@@ -121,7 +121,10 @@
             timeForTime.innerHTML = "I dag, " + row.firstElementChild.innerHTML.replace(",","")
         })
 
+        boxes[0].classList.add('active');
+
         dayButtons.forEach((button, buttonIndex) => {
+            console.log(button)
             button.addEventListener('click',()=>{
                 let updatedTfT = false
                 sections.forEach(section => {
@@ -147,17 +150,22 @@
                                 }
                                 timeForTime.innerHTML = today + day.replace(",","")
                                 updatedTfT = true
-                                table.classList.remove('update_table'); // Remove the class to reset the animation
+                                table.classList.remove('update_table');
                                 
                                 setTimeout(() => {
-                                    table.classList.add('update_table'); // Re-add the class to start the animation again
+                                    table.classList.add('update_table');
                                 }, 10);
+
+                                boxes.forEach(box => {
+                                    box.classList.remove('active')
+                                })
+                                boxes[buttonIndex].classList.add('active');
+
+
                               
                             }
                       
                             section.forEach(row => {
-                                
-                                //timeForTime.innerHTML = row.firstChild.innerHTML.trim().split(",")[0];
                                 row.style.display = "table-row"
                             })
                         }  
