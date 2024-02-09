@@ -19,6 +19,14 @@ def hello_world():
 
 @app.route("/weather/<query>")
 def display_weather(query:str):
+    """Fetches weather data from the Met.no API, processes it, and renders a template with the results.
+
+   Args:
+       query: A string containing comma-separated latitude, longitude, and place information.
+
+   Returns:
+       TemplateResponse: Rendered "weather_results.html" template with processed weather data.
+   """
     # Split the input query to extract latitude, longitude, and place information.
     lat, lon, place = query.split(',')[0], query.split(',')[1], query.split(',')[-1]
 
