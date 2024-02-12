@@ -282,6 +282,19 @@ footer {
   padding: 3rem 1rem;
   margin-top: 2rem;
 
+  & h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  > .columns :is(p, a) {
+    line-height: 150%;
+  }
+
+  & a {
+    color: #FEF4BE;
+  }
+
   > .columns {
     max-width: 1312px;
     margin: 0 auto;
