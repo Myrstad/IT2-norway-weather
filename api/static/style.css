@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -14,7 +16,6 @@ body {
 }
 
 header {
-
   max-width: calc(1312px + 2rem);
   padding: 0 1rem;
   margin: 0 auto;
@@ -40,7 +41,7 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  background-color: rgb(255 255 255 / .8);
+  background-color: rgb(255 255 255 / 0.8);
   backdrop-filter: blur(0.25rem);
   z-index: 1;
 }
@@ -61,7 +62,6 @@ header img {
   /* border: 4px solid black; */
   border-radius: 4px;
   /* background-color: rgb(255, 255, 255); */
-  
 }
 
 header a {
@@ -83,7 +83,7 @@ header form {
   width: 262px;
 }
 
-header input[type="text"] {
+header input[type='text'] {
   border: none;
   background-color: transparent;
   border-radius: 1.5rem;
@@ -94,7 +94,7 @@ header input[type="text"] {
   font-size: 1rem;
 }
 
-header input[type="submit"] {
+header input[type='submit'] {
   position: absolute;
   right: 0;
   height: 3rem;
@@ -104,7 +104,7 @@ header input[type="submit"] {
   font-size: 1rem;
   outline: 2px solid #333;
   outline-offset: -1px;
-  background-color: #FEF4BE;
+  background-color: #fef4be;
 }
 
 header label {
@@ -118,16 +118,14 @@ main {
   margin-top: 2rem;
   color: #333;
   height: fit-content;
-  min-height: calc(100vh - 4rem);
+  min-height: calc(100vh - 8rem);
 }
-
-
 
 h1 {
   font-size: 4rem;
   line-height: 120%;
   margin: 0;
-  margin-top: 2rem
+  margin-top: 2rem;
 }
 
 h1 + p {
@@ -137,8 +135,6 @@ h1 + p {
   line-height: 150%;
 }
 
-
-
 .current_weather {
   font-size: 2rem;
   font-weight: 750;
@@ -146,9 +142,7 @@ h1 + p {
   color: white;
   border-radius: 1rem;
   padding: 1rem;
-  
 }
-
 
 .weather_table_overview {
   display: flex;
@@ -159,7 +153,7 @@ h1 + p {
   height: 18rem;
 }
 
-.weather_box{
+.weather_box {
   /* box-shadow: 10px 10px 20px rgb(189, 195, 197) inset; */
   background-color: #f5f5f5;
   position: relative;
@@ -177,9 +171,9 @@ h1 + p {
 
   > h1 {
     font-size: 1.5rem;
-    margin: 0px
+    margin: 0px;
   }
-  > h3 {  
+  > h3 {
     font-weight: lighter;
     line-height: 0%;
   }
@@ -188,26 +182,22 @@ h1 + p {
     height: 7rem;
 
     bottom: 1rem;
-  
+
     display: flex;
     align-items: center;
     > h2 {
       font-size: 1.5rem;
-      display:inline-block;
+      display: inline-block;
       margin: 0px;
       vertical-align: middle;
       line-height: normal;
-
     }
 
     > img {
       width: 5rem;
-      display:inline-block;
+      display: inline-block;
     }
-  
   }
-  
-
 }
 
 .weather_box.active {
@@ -221,11 +211,9 @@ h1 + p {
   background-color: #ebedef;
 }
 
-
 .weather_box.active:hover {
   background-color: #e1ecf3;
 }
-
 
 .weather_content {
   padding: 1rem;
@@ -242,10 +230,9 @@ h1 + p {
 .weather_table {
   border: 1px solid black;
   padding: 1rem;
-  table-layout:fixed;
+  table-layout: fixed;
   overflow-wrap: break-word;
   overflow-x: scroll;
-  
 }
 
 tr {
@@ -259,21 +246,24 @@ th {
 }
 
 @keyframes update_alert {
-  0%   {background-color: rgb(255, 255, 255);}
-  20%  {background-color: rgb(146, 189, 239);}
-  100% {background-color: rgb(255, 255, 255);}
+  0% {
+    background-color: rgb(255, 255, 255);
+  }
+  20% {
+    background-color: rgb(146, 189, 239);
+  }
+  100% {
+    background-color: rgb(255, 255, 255);
+  }
 }
 
 .update_table {
   animation-name: update_alert;
   animation-duration: 1s;
- 
 }
-
 
 #time_for_time {
   font-size: 1.5rem;
-  
 }
 
 footer {
@@ -292,7 +282,7 @@ footer {
   }
 
   & a {
-    color: #FEF4BE;
+    color: #fef4be;
   }
 
   > .columns {
@@ -310,10 +300,10 @@ footer {
   }
 
   .weather_content {
-     width: 100%;
-     max-width: 100%;
-     margin: 0;
-     padding: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   .weather_table {
@@ -339,7 +329,7 @@ footer {
     border: none;
     position: relative;
     padding: 0;
-    background-color: #FEF4BE;
+    background-color: #fef4be;
   }
 
   header button span {
@@ -376,7 +366,7 @@ footer {
   }
 
   header nav {
-    background-color: rgb(255 255 255 / .8);
+    background-color: rgb(255 255 255 / 0.8);
     -webkit-backdrop-filter: blur(0.25rem);
     backdrop-filter: blur(0.25rem);
     position: fixed;
