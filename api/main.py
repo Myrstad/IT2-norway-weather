@@ -158,7 +158,7 @@ def search_get():
         return render_template("search.html")
     else:
         search_content = request.form.get("search_content")
-        search_content = urllib.parse.quote_plus(search_content)
+
         if search_content:
             return redirect(url_for(endpoint="search_result", query=search_content))
         else:
@@ -181,6 +181,6 @@ def search_result(query:str):
     Raises:
         HTTPException: If an error occurs during the search or rendering process.
     """
-    query = urllib.parse.quote_plus(query)
+    query = urllib.parse.unquote_plus(query)
     dictonary = get_place_info(query)
     return render_template('search_query.html', result=dictonary, query=query)
