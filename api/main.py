@@ -4,6 +4,7 @@ from datetime import datetime
 import locale
 import numpy as np
 import sys
+import urllib.parse
 
 app = Flask(__name__)
 
@@ -29,6 +30,7 @@ def display_weather(query:str):
    """
     # Split the input query to extract latitude, longitude, and place information.
     lat, lon, place = query.split(',')[0], query.split(',')[1], query.split(',')[-1]
+    place = urllib.parse.unquote_plus(place)
 
     # Make a GET request to the weather API with the specified latitude and longitude.
     response = requests.get(f'https://api.met.no/weatherapi/locationforecast/2.0/compact?lat={lat}&lon={lon}', headers={'user-agent': 'my-app/0.0.1'})
@@ -179,5 +181,6 @@ def search_result(query:str):
     Raises:
         HTTPException: If an error occurs during the search or rendering process.
     """
+    query = urllib.parse.unquote_plus(query)
     dictonary = get_place_info(query)
     return render_template('search_query.html', result=dictonary, query=query)
