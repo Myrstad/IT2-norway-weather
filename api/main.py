@@ -50,6 +50,9 @@ def display_weather(query:str):
     weekday = ""
     date = ""
 
+    # Save first weather summary icon
+    icon = hours[0]["data"]["next_12_hours"]["summary"]["symbol_code"]
+
     # Prepare variables for hourly data processing.
     accumulated_hours = []  # To accumulate hourly data for the current day.
     separated_hours = []  # To store separated hourly data by day.
@@ -94,8 +97,11 @@ def display_weather(query:str):
                         "min": str(min_temp), 
                         "weekday": str(last_day), 
                         "date": str(date), 
-                        "icon": hour["data"]["next_12_hours"]["summary"]["symbol_code"]
+                        "icon": icon
                     })
+            # Save first weather summary icon of each day
+            if hour.get("data").get("next_12_hours"):
+                icon = hour["data"]["next_12_hours"]["summary"]["symbol_code"]
 
             # Accumulate and reset data for processing the next day.
             separated_hours.append({"hours": accumulated_hours, "index": str(counter)})
