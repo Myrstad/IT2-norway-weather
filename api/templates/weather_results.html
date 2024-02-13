@@ -86,72 +86,100 @@
     </div>
 
     <script>
+        // Retrieve the total number of sections from the DOM and convert it into an integer.
         const sectionCount = parseInt(document.querySelector("#section_count").innerHTML);
+        // Select the DOM element intended to display the current time or selected time frame.
         const timeForTime = document.querySelector("#time_for_time");
+        // Select the table element that likely contains weather or schedule information.
         const table = document.querySelector(".weather_table")
+        // Select all box elements that are meant to represent different weather conditions or days.
         const boxes = document.querySelectorAll(".weather_box")
-        
 
+        // Initialize an empty array to store references to each section's rows.
         let sections = []
+        // Initialize an empty array to store references to the day selection buttons.
         let dayButtons = []
 
+        // Loop through the number of sections, using sectionCount as the limit.
         for (let i = 0; i < sectionCount; i++) {
+            // For each iteration, select the button corresponding to the current day/section.
             let dayButton = document.querySelector("#day_" + i);
+            // Add the selected button to the dayButtons array for later use.
             dayButtons.push(dayButton);
+            // Select all rows belonging to the current section.
             let rows = document.querySelectorAll(".section_" + i) 
-        
+            
+            // Add the NodeList of rows to the sections array.
             sections.push(rows)
-        } 
+        }
 
+        // For the first section, make all rows visible and update the timeForTime element.
         sections[0].forEach(row => {
+            // Set the display style of each row to table-row, making them visible.
             row.style.display = "table-row"
+            // Update the timeForTime element with the text "Today, " followed by the content of the first child of the row,
+            // replacing any commas found in the content.
             timeForTime.innerHTML = "I dag, " + row.firstElementChild.innerHTML.replace(",","")
         })
 
+        // Add the 'active' class to the first box to indicate it is the currently selected or default section.
         boxes[0].classList.add('active');
 
-        dayButtons.forEach((button, buttonIndex) => {
+         // Iterate over each button in the dayButtons array, providing both the button element and its index.
+         dayButtons.forEach((button, buttonIndex) => {
+            // Log the current button element to the console for debugging.
             console.log(button)
-            button.addEventListener('click',()=>{
+            // Add a click event listener to each button.
+            button.addEventListener('click', () => {
+                // Initialize a flag to track if the time for the day has been updated.
                 let updatedTfT = false
+                // Iterate over each section in the sections array.
                 sections.forEach(section => {
+                    // First, hide all rows in the current iteration to reset the view.
                     section.forEach(row => {
                         row.style.display = "none"
                     })
-                   
+                
+                    // Iterate over sections again to manage visibility based on the clicked button.
                     sections.forEach((section, sectionIndex) => {
-                     
-                        
+                        // If the current section does not match the clicked button index, hide its rows.
                         if (sectionIndex != buttonIndex) {
                             section.forEach(row => {
                                 row.style.display = "none"
                             })  
                         }
                         else {
+                            // This else block is executed for the section that matches the clicked button.
                             if (!updatedTfT) {
+                                // Extract the day from the first element's child of the current section and log it.
                                 let day = section[0].firstElementChild.innerHTML
                                 console.log(day)
                                 let today = ""
+                                // If the clicked button is the first one, add a prefix to the day indicating "today".
                                 if (buttonIndex == 0) {
-                                    today = "I dag, "
+                                    today = "I dag, " // "I dag" means "Today" in Danish.
                                 }
+                                // Update the timeForTime element with the day, removing any commas and prefixing with "today" if applicable.
                                 timeForTime.innerHTML = today + day.replace(",","")
+                                // Mark that the time for the day has been updated to prevent multiple updates.
                                 updatedTfT = true
+                                // Remove a class from the table to reset its state.
                                 table.classList.remove('update_table');
                                 
+                                // Shortly after, add the class back to trigger any CSS animations or transitions.
                                 setTimeout(() => {
                                     table.classList.add('update_table');
                                 }, 10);
 
+                                // Remove the 'active' class from all boxes.
                                 boxes.forEach(box => {
                                     box.classList.remove('active')
                                 })
-                                boxes[buttonIndex].classList.add('active');
-
-
-                              
+                                // Add the 'active' class to the box corresponding to the clicked button.
+                                boxes[buttonIndex].classList.add('active');          
                             }
-                      
+                    
+                            // Display the rows of the section matching the clicked button.
                             section.forEach(row => {
                                 row.style.display = "table-row"
                             })
@@ -160,34 +188,6 @@
                 })
             })
         })
-
-        
-        //     // if (expanded) expanded=false
-        //     // else expanded = true
-
-         
-
-       
-
-        //     current += 1;
-        //     if (current > sectionCount) {
-        //         current = 0;
-        //     }
-
-        //     // if (expanded) {
-        //     //     tableRows.forEach(row=>{
-        //     //         row.style.display = "table-row"
-        //     //     })
-        //     //     button.innerHTML = "Vis mindre"
-        //     // } else {
-        //     //     tableRows.forEach((row, index) => {
-        //     //         if (index >= 4) {
-        //     //             row.style.display = "none"
-        //     //         }
-        //     //     })
-        //     //     button.innerHTML = "Vis mer"
-        //     // }
-        // })
     </script>
 
 {% endblock %}
