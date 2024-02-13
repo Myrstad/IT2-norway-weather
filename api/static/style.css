@@ -118,7 +118,7 @@ main {
   margin-top: 2rem;
   color: #333;
   height: fit-content;
-  min-height: calc(100vh - 4rem);
+  min-height: calc(100vh - 8rem);
 }
 
 
